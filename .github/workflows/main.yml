@@ -2,6 +2,8 @@ name: Main pipeline
 concurrency: ci-${{ github.ref }}
 on:
   push:
+    paths-ignore:
+      - 'roles/**'  
     branches:
       - main
 
