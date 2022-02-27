@@ -1,0 +1,17 @@
+---
+- name: Get my public IP
+  ipify_facts:
+- name: Generate Client Configuration
+  template:
+    src: client.conf.j2
+    dest: "{{ client.tmp_dir }}/{{ client.config_name_prefix }}.conf"
+    mode: 0644
+    owner: root
+    group: root
+    backup: false
+  notify: restart wg
+- name: Fetch Client configuration
+  fetch:
+    src: "{{ client.tmp_dir }}/{{ client.config_name_prefix }}.conf"
+    dest: "./{{ client.config_name_prefix }}.conf"
+    flat: true

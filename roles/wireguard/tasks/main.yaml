@@ -1,0 +1,6 @@
+- name: deps
+  include_tasks: deps.yaml
+- name: install wg
+  include_tasks: install.yaml
+- name: fetch client config
+  include_tasks: client.yaml

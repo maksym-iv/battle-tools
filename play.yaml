@@ -1,0 +1,40 @@
+---
+- name: Install Wireguard
+  hosts: all
+  any_errors_fatal: true
+  roles:
+    - wireguard  
+  vars:
+    net:
+      subnet: 192.168.6.1/24
+      server_ip: 192.168.6.1/32
+      client_ip: 192.168.6.2/32
+    server:
+      listen_port: 41194
+      config_dir: /etc/wireguard
+      tmp_dir: /root/wg_server_tmp
+      privkey_path: server_privkey
+      pubkey_path: server_pubkey
+    client:
+      config_name_prefix: war_wg
+      tmp_dir: /root/wg_client_tmp
+      privkey_path: client_privkey
+      pubkey_path: client_pubkey    
+- name: Install Docker
+  hosts: all
+  any_errors_fatal: true
+  vars:
+    docker_edition: 'ce'
+    docker_package: "docker-{{ docker_edition }}"
+    docker_package_state: latest
+    ocker_service_state: started
+    docker_service_enabled: true
+    docker_restart_handler_state: restarted
+    pip_package: python3-pip
+    pip_executable: pip3
+    pip_install_packages:
+      - name: docker
+        state: latest
+  roles:
+    - geerlingguy.pip
+    - geerlingguy.docker

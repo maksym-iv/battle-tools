@@ -1,0 +1,11 @@
+[Interface]
+PrivateKey = {{ server_privkey.content | b64decode }}
+Address = {{ net.subnet }}
+ListenPort = {{ server.listen_port }}
+SaveConfig = true
+PostUp = {{ server.config_dir }}/helper/add-nat-routing.sh
+PostDown = {{ server.config_dir }}/helper/remove-nat-routing.sh
+
+[Peer]
+PublicKey = {{ client_pubkey.content | b64decode }}
+AllowedIPs = {{ net.client_ip }}

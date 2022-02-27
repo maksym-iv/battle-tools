@@ -1,0 +1,25 @@
+---
+- name: upgrade all packages # noqa package-latest
+  apt:
+    name: "*"
+    state: latest
+    only_upgrade: true
+    update_cache: true
+- name: Install misc packages # noqa package-latest
+  apt:
+    name:
+      - vim
+      - htop
+      - sysstat
+      - unzip
+      - apt-transport-https
+      - tmux
+      - wireguard
+      - coreutils
+    state: latest
+- name: Enable IPv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    sysctl_file: /etc/sysctl.d/10-forward.conf
+    sysctl_set: true

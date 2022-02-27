@@ -1,0 +1,88 @@
+---
+# Server keys
+- name: Create server tmp dir
+  file:
+    path: "{{ server.tmp_dir }}"
+    state: directory
+    mode: 0755
+- name: Generate server privkey
+  shell: "set -o pipefail && wg genkey | tee {{ server.tmp_dir }}/{{ server.privkey_path }}"
+  args:
+    executable: /bin/bash
+    creates: "{{ server.tmp_dir }}/{{ server.privkey_path }}"
+  ignore_errors: False
+- name: Generate server pubkey
+  shell: "set -o pipefail && cat {{ server.tmp_dir }}/{{ server.privkey_path }} | wg pubkey > {{ server.tmp_dir }}/{{ server.pubkey_path }}"
+  args:
+    executable: /bin/bash
+    creates: "{{ server.tmp_dir }}/{{ server.pubkey_path }}"
+  ignore_errors: False
+- name: Read server privkey
+  slurp:
+    src: "{{ server.tmp_dir }}/{{ server.privkey_path }}"
+  register: server_privkey
+- name: Read server pubkey
+  slurp:
+    src: "{{ server.tmp_dir }}/{{ server.pubkey_path }}"
+  register: server_pubkey
+
+# client keys
+- name: Create client tmp dir
+  file:
+    path: "{{ client.tmp_dir }}"
+    state: directory
+    mode: 0755
+- name: Generate client privkey
+  shell: "set -o pipefail && wg genkey | tee {{ client.tmp_dir }}/{{ client.privkey_path }}"
+  args:
+    executable: /bin/bash
+    creates: "{{ client.tmp_dir }}/{{ client.privkey_path }}"
+  ignore_errors: False
+  register: client_privkey
+- name: Generate client pubkey
+  shell: "set -o pipefail && cat {{ client.tmp_dir }}/{{ client.privkey_path }} | wg pubkey > {{ client.tmp_dir }}/{{ client.pubkey_path }}"
+  args:
+    executable: /bin/bash
+    creates: "{{ client.tmp_dir }}/{{ client.pubkey_path }}"
+  ignore_errors: False
+  register: client_pubkey
+- name: Read client privkey
+  slurp:
+    src: "{{ client.tmp_dir }}/{{ client.privkey_path }}"
+  register: client_privkey
+- name: Read client pubkey
+  slurp:
+    src: "{{ client.tmp_dir }}/{{ client.pubkey_path }}"
+  register: client_pubkey
+
+# Configure Wireguard
+- name: Create helper
+  file:
+    path: "{{ server.config_dir }}/helper"
+    state: directory
+    mode: 0755
+- name: Iptables add nat helper
+  template:
+    dest: "{{ server.config_dir }}/helper/add-nat-routing.sh"
+    src: helper/add-nat-routing.sh.j2
+    owner: root
+    group: root
+    mode: 0755
+    backup: false
+- name: Iptables remove nat helper
+  template:
+    dest: "{{ server.config_dir }}/helper/remove-nat-routing.sh"
+    src: helper/remove-nat-routing.sh.j2
+    owner: root
+    group: root
+    mode: 0755
+    backup: false
+- name: Configure Wireguard
+  template:
+    src: wg0.conf.j2
+    dest: "{{ server.config_dir }}/wg0.conf"
+    mode: 0644
+    owner: root
+    group: root
+    backup: false
+  notify: restart wg
