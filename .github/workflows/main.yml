@@ -3,7 +3,8 @@ concurrency: ci-${{ github.ref }}
 on:
   push:
     paths-ignore:
-      - 'roles/**'  
+      - "roles/**""
+      - "README.md"
     branches:
       - main
 

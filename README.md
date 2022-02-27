@@ -1,6 +1,7 @@
 - [Important](#important)
 - [Overview](#overview)
   - [Details](#details)
+  - [Monitoring tools](#monitoring-tools)
 - [Install](#install)
   - [Deps](#deps)
   - [Install Ansible](#install-ansible)
@@ -25,6 +26,10 @@ This is set ansible roles to install core tools on remote server
 * Wireguard VPN, config will be fetched to local
 * Docker
 * tmux
+
+## Monitoring tools
+* [Monitor](https://ddosmonitor.herokuapp.com/)
+* [Geo distributed monitor](https://www.uptrends.com/tools/uptime)
 
 # Install
 ## Deps
