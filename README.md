@@ -10,6 +10,7 @@
   - [Wireguard](#wireguard)
   - [Use tools/get shell](#use-toolsget-shell)
   - [Siege Engine](#siege-engine)
+  - [Bombardier](#bombardier)
 
 # Important
 * Tested on Ubuntu 20.04
@@ -24,7 +25,6 @@ This is set ansible roles to install core tools on remote server
 * Wireguard VPN, config will be fetched to local
 * Docker
 * tmux
-* [siege_engine](https://github.com/smok-serwis/siege-engine)
 
 # Install
 ## Deps
@@ -58,5 +58,11 @@ ssh ${a_user}@${a_ip}
 ## Siege Engine
 Tool for SYN flood, [ref](https://github.com/smok-serwis/siege-engine)
 ```
-python3 -m siege_engine 300 tass.com
+docker run --rm -it mack/battle-tools python3 -m siege_engine 300 tass.com
+```
+
+## Bombardier
+Tool for HTTP stress
+```
+docker run --rm -it mack/battle-tools bombardier -c 200 -d 300s -l https://mininform.gov.by
 ```
