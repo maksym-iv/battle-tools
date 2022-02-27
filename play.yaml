@@ -38,3 +38,8 @@
   roles:
     - geerlingguy.pip
     - geerlingguy.docker
+- name: Install Siege Engine
+  hosts: all
+  any_errors_fatal: true
+  roles:
+    - siege-engine
