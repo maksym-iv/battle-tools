@@ -3,7 +3,7 @@
 
 ---
 
-Tools installed
+## Tools installed
 * [siege_engine](https://github.com/smok-serwis/siege-engine)
 * [bombardier](https://github.com/codesenberg/bombardier)
 
