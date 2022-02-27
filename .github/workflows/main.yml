@@ -1,0 +1,58 @@
+name: Main pipeline with approve
+concurrency: ci-${{ github.ref }}
+on:
+  push:
+    branches:
+      - main
+
+env:
+  GO_VERSION: "1.17"
+  APP_NAME: hey
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}.x
+      - name: Test
+        run: go test ./... -cover
+      - name: Test race
+        run: go test -race ./... -cover
+  build:
+    name: Build
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: deploy/Dockerfile
+          push: false
+          tags: ${{ env.APP_NAME }}
+          build-args: |
+            GO_VERSION=${{ env.GO_VERSION }}
+          target: runner
+  deploy-dev:
+      name: Deploy Dev
+      needs: build
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push' 
+      runs-on: 'ubuntu-latest'
+      environment: dev
+      steps:
+        - name: Deploy dev
+          run: echo "Deploying dev"
+  deploy-prod:
+      name: Deploy prod
+      needs: deploy-dev
+      runs-on: 'ubuntu-latest'
+      timeout-minutes: 15
+      environment: 'prod'
+      steps:
+        - name: Deploy prod
+          run: echo "Deploying prod"
