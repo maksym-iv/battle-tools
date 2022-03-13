@@ -17,6 +17,13 @@
       - wireguard
       - coreutils
     state: latest
+- name: Tmux root rc
+  copy:
+    src: files/tmux.conf
+    dest: /root/.tmux.conf
+    owner: root
+    group: root
+    mode: 0644
 - name: Enable IPv4 forwarding
   sysctl:
     name: net.ipv4.ip_forward

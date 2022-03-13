@@ -22,10 +22,10 @@
 Sometimes we may need good internet channel, especially since Feb 24. There may be no good internet channel or no access to the VPN. Solution to it is to set up a server with tools. All you need is to create virtual server or rent physical server 
 
 ## Details
-This is set ansible roles to install core tools on remote server
+This is a set ansible roles to install core tools on remote server
 * Wireguard VPN, config will be fetched to local
 * Docker
-* tmux
+* tmux (with `screen` like rc, check `ansible/roles/wireguard/files/.tmux.conf`)
 
 ## Monitoring tools
 * [Monitor](https://ddosmonitor.herokuapp.com/)
@@ -46,6 +46,7 @@ python -m pip install --user ansible
 # Run
 ## Digital ocean
 ```
+cd ansible/
 export a_user="root"
 export a_ip="SERVER_IP"
 ansible-playbook -i "${a_ip}," -u ${a_user} -b play.yaml
@@ -67,7 +68,7 @@ docker run --rm -it mack/battle-tools python3 -m siege_engine 300 tass.com
 ```
 
 ## Bombardier
-Tool for HTTP stress
+Tool for HTTP stress (we should use `--http2` because [fasthttp issue](https://github.com/codesenberg/bombardier#known-issues))
 ```
-docker run --rm -it mack/battle-tools bombardier -c 200 -d 300s -l https://mininform.gov.by
+docker run --rm -it mack/battle-tools bombardier --http2 -c 200 -d 300s -l https://mininform.gov.by
 ```
