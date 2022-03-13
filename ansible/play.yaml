@@ -3,7 +3,7 @@
   hosts: all
   any_errors_fatal: true
   roles:
-    - wireguard  
+    - wireguard
   vars:
     net:
       subnet: 192.168.6.1/24
@@ -19,7 +19,7 @@
       config_name_prefix: war_wg
       tmp_dir: /root/wg_client_tmp
       privkey_path: client_privkey
-      pubkey_path: client_pubkey    
+      pubkey_path: client_pubkey
 - name: Install Docker
   hosts: all
   any_errors_fatal: true

@@ -1,0 +1,10 @@
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v2.5.0
+      hooks:
+          - id: trailing-whitespace
+            language_version: python3
+          - id: end-of-file-fixer
+            language_version: python3
+          - id: check-merge-conflict
+            language_version: python3

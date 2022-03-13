@@ -1,12 +1,12 @@
 #!/bin/bash
 IPT="/sbin/iptables"
-IPT6="/sbin/ip6tables"          
- 
+IPT6="/sbin/ip6tables"
+
 IN_FACE="{{ ansible_facts.default_ipv4.interface }}"                   # NIC connected to the internet
-WG_FACE="wg0"                    # WG NIC 
+WG_FACE="wg0"                    # WG NIC
 SUB_NET="{{ net.subnet }}"            # WG IPv4 sub/net aka CIDR
 WG_PORT="{{ server.listen_port }}"                  # WG udp port
- 
+
 ## IPv4 ##
 $IPT -t nat -I POSTROUTING 1 -s $SUB_NET -o $IN_FACE -j MASQUERADE
 $IPT -I INPUT 1 -i $WG_FACE -j ACCEPT

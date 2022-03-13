@@ -19,7 +19,7 @@
 * PRs are welcome
 
 # Overview
-Sometimes we may need good internet channel, especially since Feb 24. There may be no good internet channel or no access to the VPN. Solution to it is to set up a server with tools. All you need is to create virtual server or rent physical server 
+Sometimes we may need good internet channel, especially since Feb 24. There may be no good internet channel or no access to the VPN. Solution to it is to set up a server with tools. All you need is to create virtual server or rent physical server
 
 ## Details
 This is a set ansible roles to install core tools on remote server
@@ -35,10 +35,10 @@ This is a set ansible roles to install core tools on remote server
 ## Deps
 * `pip` - python package manager. Install doc can be found [here](https://www.geeksforgeeks.org/how-to-install-pip-on-windows/#:~:text=Download%20and%20Install%20pip%3A&text=Download%20the%20get%2Dpip.py,where%20the%20above%20file%20exists.&text=and%20wait%20through%20the%20installation,now%20installed%20on%20your%20system.), note, I've not tested it.
 * Wireguard client, install doc can be found [here](https://www.wireguard.com/install/)
-  
+
 ## Install Ansible
 If you have `pip` installed, than install via pip - [reference](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-with-pip)
-In short, run 
+In short, run
 ```
 python -m pip install --user ansible
 ```
