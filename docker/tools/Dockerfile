@@ -20,11 +20,14 @@ RUN apk --no-cache update && apk --no-cache upgrade \
     && apk --no-cache add --virtual build-dependencies go \
     # Go tools
     # Install bombardier
-    && echo "Starting installing bombardier $BOMBARDIER_VERSION." \
+    && echo "Starting installing bombardier" \
     && go get github.com/codesenberg/bombardier@v1.2.5 \
     # Install bilalcaliskan/syn-flood
-    && echo "Starting installing bombardier $BOMBARDIER_VERSION." \
+    && echo "Starting installing syn-flood" \
     && go get github.com/bilalcaliskan/syn-flood \
+    # Install rakyll/hey
+    && echo "Starting installing hey" \
+    && go get github.com/rakyll/hey \
     # Cleanup
     && apk del build-dependencies \
     && rm -rf ${GOPATH}/pkg/
