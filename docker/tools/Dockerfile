@@ -1,8 +1,5 @@
 FROM alpine:3.15
 
-# Go tools
-ARG BOMBARDIER_VERSION=github.com/codesenberg/bombardier@v1.2.5
-
 # Go vars
 ENV GOROOT /usr/lib/go
 ENV GOPATH /gopath
@@ -24,7 +21,10 @@ RUN apk --no-cache update && apk --no-cache upgrade \
     # Go tools
     # Install bombardier
     && echo "Starting installing bombardier $BOMBARDIER_VERSION." \
-    && go get ${BOMBARDIER_VERSION} \
+    && go get github.com/codesenberg/bombardier@v1.2.5 \
+    # Install bilalcaliskan/syn-flood
+    && echo "Starting installing bombardier $BOMBARDIER_VERSION." \
+    && go get github.com/bilalcaliskan/syn-flood \
     # Cleanup
     && apk del build-dependencies \
     && rm -rf ${GOPATH}/pkg/

