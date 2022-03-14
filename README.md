@@ -1,6 +1,7 @@
 - [Important](#important)
 - [Overview](#overview)
   - [Details](#details)
+    - [Tools in the Docker image](#tools-in-the-docker-image)
   - [Monitoring tools](#monitoring-tools)
 - [Install](#install)
   - [Deps](#deps)
@@ -12,6 +13,7 @@
   - [Use tools/get shell](#use-toolsget-shell)
   - [Siege Engine (syn flood)](#siege-engine-syn-flood)
   - [Golang syn-flood](#golang-syn-flood)
+  - [MHDDoS](#mhddos)
   - [Bombardier](#bombardier)
 
 # Important
@@ -28,9 +30,22 @@ This is a set ansible roles to install core tools on remote server
 * Docker
 * tmux (with `screen` like rc, check `ansible/roles/wireguard/files/.tmux.conf`)
 
+### Tools in the Docker image
+* [MHDDoS](https://github.com/MHProDev/MHDDoS)
+* [bombardier](https://github.com/codesenberg/bombardier)
+* [siege-engine](https://github.com/smok-serwis/siege-engine)
+* [syn-flood](https://github.com/bilalcaliskan/syn-flood)
+
 ## Monitoring tools
 * [Monitor](https://ddosmonitor.herokuapp.com/)
 * [Geo distributed monitor](https://www.uptrends.com/tools/uptime)
+* [ctop](https://github.com/bcicen/ctop)
+  ```
+  docker run --rm -ti \
+    --name=ctop \
+    --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+    quay.io/vektorlab/ctop:latest
+  ```
 
 # Install
 ## Deps
@@ -73,6 +88,9 @@ Tool for SYN flood, [ref](https://github.com/bilalcaliskan/syn-flood)
 ```
 docker run --rm -it mack/battle-tools syn-flood --port 443 --host tass.com
 ```
+
+## MHDDoS
+TBD
 
 ## Bombardier
 Tool for HTTP stress (we should use `--http2` because [fasthttp issue](https://github.com/codesenberg/bombardier#known-issues))
